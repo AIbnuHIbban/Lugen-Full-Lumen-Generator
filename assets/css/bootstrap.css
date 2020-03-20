@@ -4,7 +4,7 @@
  * Copyright 2011-2019 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
- @import url('https://fonts.googleapis.com/css?family=Nunito:400,700,900&display=swap');
+ @import url('https://fonts.googleapis.com/css?family=Nunito:300,400,800&display=swap');
  :root {
     --blue: #007bff;
     --indigo: #6610f2;
@@ -161,7 +161,7 @@
   }
   
   a:hover {
-    color: #0056b3;
+    color: #DD271C;
     text-decoration: underline;
   }
   
@@ -2562,6 +2562,7 @@
     color: #fff;
     background-color: #007bff;
     border-color: #007bff;
+    box-shadow: 0px 5px 30px 0px #007bff;
   }
   
   .btn-primary:hover {
@@ -2588,11 +2589,6 @@
     color: #fff;
     background-color: #0062cc;
     border-color: #005cbf;
-  }
-  
-  .btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus,
-  .show > .btn-primary.dropdown-toggle:focus {
-    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
   }
   
   .btn-secondary {
@@ -4237,7 +4233,7 @@
   .nav-link {
     display: block;
     padding: 0.5rem 1rem;
-    font-weight: 700;
+    font-weight: 100;
   }
   
   .nav-link:hover, .nav-link:focus {
@@ -4299,7 +4295,7 @@
   .nav-pills .show > .nav-link {
     color: #fff;
     background-color: #DD271C;
-    font-weight: 900;
+    font-weight: 600;
   }
   
   .nav-fill .nav-item {
@@ -5202,7 +5198,7 @@
   
   .badge-danger {
     color: #fff;
-    background-color: #dd271c;
+    background-color: #DD271C;
     padding: 5px;
     cursor: pointer;
   }
@@ -6019,7 +6015,7 @@
     background-color: #fff;
     background-clip: padding-box;
     border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 0.3rem;
+    border-radius: 25px;
     outline: 0;
   }
   

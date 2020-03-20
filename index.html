@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laragen - Full Generator Laravel</title>
+    <title>Lugen - Full Generator Lumen for API</title>
     <link rel="stylesheet" href="assets/css/bootstrap.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@3/dark.css">
     <link rel="shortcut icon" href="assets/favicon.png" type="image/x-icon">
 </head>
 <body>
@@ -24,6 +25,9 @@
                 <li class="nav-item">
                     <a class="nav-link" id="migration-tab" data-toggle="tab" href="#migration" role="tab" aria-controls="migration" aria-selected="false">Migrations</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="route-tab" data-toggle="tab" href="#route" role="tab" aria-controls="route" aria-selected="false">Routes</a>
+                </li>
             </ul>
             <div class="tab-content mt-3" id="myTabContent">
                 <!-- All In One -->
@@ -33,13 +37,16 @@
                             <div class="card h-22">
                                 <div class="card-body">
                                     <input type="text" class="form-control mb-2" name="" id="table_name" aria-describedby="helpId" placeholder="Table Name" autofocus onkeypress="return goodchars(event,'abcdefghijklmnopqrstuvwxyz_',this)">
-                                    <textarea class="form-control" name="" id="list_column" rows="8" placeholder="column1,column2,column3,column4,column5" onkeypress="return goodchars(event,'abcdefghijklmnopqrstuvwxyz_,1234567890',this)"></textarea>
+                                    <textarea class="form-control" name="" id="list_column" rows="8" placeholder="column1,column2,column3,column4,column5" onkeypress="return goodchars(event,'abcdefghijklmnopqrstuvwxyz_,1234567890',this)" onkeyup="disableEnter()"></textarea>
                                     <div class="row mt-3">
                                         <div class="col-md-7">
-                                            
+                                            <ul>
+                                                <li><strong class="text-dark">ENTER</strong> in Textarea for Generate </li>
+                                                <li><strong class="text-primary">EXAMPLE</strong> for See Example Result </li>
+                                            </ul>
                                         </div>
                                         <div class="col-md-5 text-right">
-                                            <button class="btn btn-primary">Example</button>
+                                            <button class="btn btn-primary mr-3" onclick="example()">Example</button>
                                             <button type="button" onclick="generate()" class="btn btn-danger">Generate</button>
                                         </div>
                                     </div>
@@ -63,7 +70,7 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="card dark h-16">
+                            <div class="card dark h-10">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-10">
@@ -80,7 +87,7 @@
                                     
                                 </div>
                             </div>
-                            <div class="card mt-3 dark h-16">
+                            <div class="card mt-3 dark h-10">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-10">
@@ -96,9 +103,26 @@
                                     <textarea id="clipboard_migration" style="opacity: 0;"></textarea>
                                 </div>
                             </div>
+                            <div class="card mt-3 dark h-11">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            <p class="font-weight-bold">
+                                                Result For Routes
+                                            </p>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <span onclick="copyClipboard('routes')" class="badge badge-danger">Copy Code</span>
+                                        </div>
+                                    </div>
+                                    <pre><code id="result_routes"></code></pre>
+                                    <textarea id="clipboard_routes" style="opacity: 0;"></textarea>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <!-- Models -->
                 <div class="tab-pane fade" id="models" role="tabpanel" aria-labelledby="models-tab">
                     <div class="row">
                         <div class="col-md-6">
@@ -139,6 +163,7 @@
                         </div>
                     </div>
                 </div>
+                <!-- CRUD -->
                 <div class="tab-pane fade" id="crud" role="tabpanel" aria-labelledby="crud-tab">
                     <div class="row">
                         <div class="col-md-6">
@@ -179,6 +204,7 @@
                         </div>
                     </div>
                 </div>
+                <!-- Migration -->
                 <div class="tab-pane fade" id="migration" role="tabpanel" aria-labelledby="migration-tab">
                     <div class="row">
                         <div class="col-md-6">
@@ -219,6 +245,47 @@
                         </div>
                     </div>
                 </div>
+                <!-- Routes -->
+                <div class="tab-pane fade" id="route" role="tabpanel" aria-labelledby="route-tab">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card h-33">
+                                <div class="card-body">
+                                    <input type="text" class="form-control mb-2" name="" id="" aria-describedby="helpId" placeholder="Table Name" autofocus onkeypress="return goodchars(event,'abcdefghijklmnopqrstuvwxyz_',this)">
+                                    <textarea class="form-control" name="" id="" rows="15" placeholder="column1,column2,column3,column4,column5" onkeypress="return goodchars(event,'abcdefghijklmnopqrstuvwxyz_,1234567890',this)"></textarea>
+                                    <div class="row mt-3">
+                                        <div class="col-md-7">
+                                            
+                                        </div>
+                                        <div class="col-md-5 text-right">
+                                            <button class="btn btn-primary">Example</button>
+                                            <button type="button" onclick="generate()" class="btn btn-danger">Generate</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 pl-0">
+                            <div class="card h-33 dark">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            <p class="font-weight-bold">
+                                                Result For Routes
+                                            </p>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <span onclick="copyClipboard('migration')" class="badge badge-danger">Copy Code</span>
+                                        </div>
+                                    </div>
+                                    <p>
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta quia eligendi id itaque. Neque illo sequi, eveniet, quasi delectus excepturi nulla at obcaecati itaque velit corrupti dolores deserunt? Molestiae, totam.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
@@ -227,12 +294,12 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-body p-0">
-                    <img class="img-fluid" src="assets/img/welcome.png" alt="welcome_laragen" srcset="assets/img/welcome.png">
+                    <img style="border-radius:20px" class="img-fluid" src="assets/img/welcome.png" alt="welcome_laragen" srcset="assets/img/welcome.png">
                 </div>
             </div>
         </div>
     </div>
-        
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/8.11.8/sweetalert2.all.min.js'></script>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
     <script src="https://aibnuhibban.github.io/OnKey-Javascript/key.min.js"></script>
