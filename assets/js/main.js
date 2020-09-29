@@ -45,13 +45,12 @@ function example(){
     let migrations      = "$table->string('column1')"
     res_model.text(`<?php
     
-namespace App;
+namespace App\\Models;
     
 use Illuminate\\Database\\Eloquent\\Model;
     
 class ${table} extends Model{
     protected $table = "${table.toLowerCase().replace(" ", "_")}";
-
     protected $fillable = [${kolom}];
 
     // public $timestamps = false;
@@ -76,13 +75,11 @@ class ${table}Controller extends Controller{
         if(count($data) > 0){
             return response()->json([
                 'status'    => 'success',
-                'pesan'     => 'berhasil',
                 'data'      => $data
             ]);
         }else{
             return response()->json([
-                'status'    => 'success',
-                'pesan'     => 'Data Kosong',
+                'status'    => 'failed',
                 'data'      => null
             ]);
         }
@@ -102,7 +99,6 @@ class ${table}Controller extends Controller{
         
         // $send = ${table}::create($request->all());
 
-
         if ($send) {
             return response()->json([
                 'status'    => 'success',
@@ -111,12 +107,12 @@ class ${table}Controller extends Controller{
         }
     }
 
-    public function update(Request $request,$${table.toLowerCase()}){
+    public function update(Request $request,$id){
         $this->validate($request, [
             ${validasi}
         ]);
 
-        $${table.toLowerCase()} = ${table}::find($${table.toLowerCase()});
+        $${table.toLowerCase()} = ${table}::find($id);
 
         $array = [
             ${data}
@@ -130,8 +126,8 @@ class ${table}Controller extends Controller{
         }
     }
 
-    public function destroy($${table.toLowerCase()}){
-        $${table.toLowerCase()} = ${table}::find($${table.toLowerCase()});
+    public function destroy($id){
+        $${table.toLowerCase()} = ${table}::find($id);
         if ($${table.toLowerCase()}->delete()) {
             return response()->json([
                 'status'    => 'success',
@@ -156,12 +152,11 @@ class ${table} extends Migration{
     
     public function up(){
         Schema::create('${table.toLowerCase().replace(" ", "_")}', function (Blueprint $table) {
-            
             $table->id();
             ${migrations}
             $table->timestamps();
 
-            // Options: See More at https://laravel.com/docs/7.x/migrations#creating-columns
+            // Options: See More at https://laravel.com/docs/8.x/migrations#creating-columns
             // integer
             // bigInteger
             // binary
@@ -189,16 +184,18 @@ class ${table} extends Migration{
 }`)
         res_routes.text(`<?php
     
+use App\\Http\\Controllers\\${table}Controller;
+
 $app->get('/', function() use ($app) {
     return $app->app->version();
 });
 
 $router->group(['prefix'=>'api/v1'], function() use($router){
 
-    $router->get('${table.toLowerCase().replace(" ", "_")}', '${table}Controller@index');
-    $router->post('${table.toLowerCase().replace(" ", "_")}', '${table}Controller@store');
-    $router->put('${table.toLowerCase().replace(" ", "_")}/{id}', '${table}Controller@update');
-    $router->delete('${table.toLowerCase().replace(" ", "_")}/{id}', '${table}Controller@destroy');
+    $router->get('${table.toLowerCase().replace(" ", "_")}', '[${table}Controller::class, 'index']);
+    $router->post('${table.toLowerCase().replace(" ", "_")}', '[${table}Controller::class, 'store']);
+    $router->put('${table.toLowerCase().replace(" ", "_")}/{id}', '[${table}Controller::class, 'update']);
+    $router->delete('${table.toLowerCase().replace(" ", "_")}/{id}', '[${table}Controller::class, 'destroy']);
 
 });`)
     
@@ -272,30 +269,30 @@ function generate(){
             }
         }
         res_model.text(`<?php
-    
-    namespace App;
-        
-    use Illuminate\\Database\\Eloquent\\Model;
-        
-    class ${table.val().charAt(0).toUpperCase() + table.val().substr(1)} extends Model{
-        protected $table = "${table.val().toLowerCase().replace(" ", "_")}";
-    
-        protected $fillable = [${kolom}];
 
-        // public $timestamps = false;
+namespace App;
     
-        /**
-         * Create by LeeNuksID :D
-         *
-         * Thanks For Using Laragen
-         */
-    }`)
+use Illuminate\\Database\\Eloquent\\Model;
+    
+class ${table.val().charAt(0).toUpperCase() + table.val().substr(1)} extends Model{
+    protected $table = "${table.val().toLowerCase().replace(" ", "_")}";
+
+    protected $fillable = [${kolom}];
+
+    // public $timestamps = false;
+
+    /**
+     * Create by LeeNuksID :D
+     *
+     * Thanks For Using Laragen
+     */
+}`)
         res_crud.text(`<?php
     
 namespace App\\Http\\Controllers;
 
 use Illuminate\\Http\\Request;
-use App\\${table.val().charAt(0).toUpperCase() + table.val().substr(1)};
+use App\\Models\\${table.val().charAt(0).toUpperCase() + table.val().substr(1)};
 
 class ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller extends Controller{
 
@@ -384,12 +381,11 @@ class ${table.val().charAt(0).toUpperCase() + table.val().substr(1)} extends Mig
     
     public function up(){
         Schema::create('${table.val().toLowerCase().replace(" ", "_")}', function (Blueprint $table) {
-            
             $table->id();
             ${migrations}
             $table->timestamps();
 
-            // Options: See More at https://laravel.com/docs/7.x/migrations#creating-columns
+            // Options: See More at https://laravel.com/docs/8.x/migrations#creating-columns
             // integer
             // bigInteger
             // binary
@@ -423,10 +419,10 @@ $app->get('/', function() use ($app) {
 
 $router->group(['prefix'=>'api/v1'], function() use($router){
 
-    $router->get('${table.val().toLowerCase().replace(" ", "_")}', '${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller@index');
-    $router->post('${table.val().toLowerCase().replace(" ", "_")}', '${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller@store');
-    $router->put('${table.val().toLowerCase().replace(" ", "_")}/{id}', '${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller@update');
-    $router->delete('${table.val().toLowerCase().replace(" ", "_")}/{id}', '${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller@destroy');
+    $router->get('${table.val().toLowerCase().replace(" ", "_")}', [${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller::class, 'index']);
+    $router->post('${table.val().toLowerCase().replace(" ", "_")}', [${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller::class, 'store']);
+    $router->put('${table.val().toLowerCase().replace(" ", "_")}/{id}', [${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller::class, 'update']);
+    $router->delete('${table.val().toLowerCase().replace(" ", "_")}/{id}', [${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller::class, 'destroy']);
 
 });`)
     
