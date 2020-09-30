@@ -192,10 +192,10 @@ $app->get('/', function() use ($app) {
 
 $router->group(['prefix'=>'api/v1'], function() use($router){
 
-    $router->get('${table.toLowerCase().replace(" ", "_")}', '[${table}Controller::class, 'index']);
-    $router->post('${table.toLowerCase().replace(" ", "_")}', '[${table}Controller::class, 'store']);
-    $router->put('${table.toLowerCase().replace(" ", "_")}/{id}', '[${table}Controller::class, 'update']);
-    $router->delete('${table.toLowerCase().replace(" ", "_")}/{id}', '[${table}Controller::class, 'destroy']);
+    $router->get('${table.toLowerCase().replace(" ", "_")}', '${table}Controller@index');
+    $router->post('${table.toLowerCase().replace(" ", "_")}', '${table}Controller@store');
+    $router->put('${table.toLowerCase().replace(" ", "_")}/{id}', '${table}Controller@update');
+    $router->delete('${table.toLowerCase().replace(" ", "_")}/{id}', '${table}Controller@destroy');
 
 });`)
     
@@ -419,10 +419,10 @@ $app->get('/', function() use ($app) {
 
 $router->group(['prefix'=>'api/v1'], function() use($router){
 
-    $router->get('${table.val().toLowerCase().replace(" ", "_")}', [${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller::class, 'index']);
-    $router->post('${table.val().toLowerCase().replace(" ", "_")}', [${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller::class, 'store']);
-    $router->put('${table.val().toLowerCase().replace(" ", "_")}/{id}', [${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller::class, 'update']);
-    $router->delete('${table.val().toLowerCase().replace(" ", "_")}/{id}', [${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller::class, 'destroy']);
+    $router->get('${table.val().toLowerCase().replace(" ", "_")}', '${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller@index');
+    $router->post('${table.val().toLowerCase().replace(" ", "_")}', '${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller@store');
+    $router->put('${table.val().toLowerCase().replace(" ", "_")}/{id}', '${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller@update');
+    $router->delete('${table.val().toLowerCase().replace(" ", "_")}/{id}', '${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller@destroy');
 
 });`)
     
