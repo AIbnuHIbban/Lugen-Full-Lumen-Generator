@@ -1,6 +1,17 @@
 $(window).on('load',function(){
-    $('#welcome').modal('show');
+    if (!hasOpen()) {
+        $('#welcome').modal('show');
+        sessionStorage.setItem('ban',true)
+    }
 });
+
+function hasOpen() {
+    if (sessionStorage.getItem('ban')) {
+        return true
+    }else{
+        return false
+    }
+}
 
 $('textarea').keypress(function(event) {
     if (event.keyCode == 13) {
@@ -30,10 +41,12 @@ function copyClipboard(jenis) {
 
 function example(){
     var table           = "Example"
+    var res_transform   = $('#result_transofrm')
     var res_model       = $('#result_models')
     var res_crud        = $('#result_crud')
     var res_migration   = $('#result_migration')
     var res_routes      = $('#result_routes')
+    var cp_transform    = $('#clipboard_transform')
     var cp_model        = $('#clipboard_models')
     var cp_crud         = $('#clipboard_crud')
     var cp_migration    = $('#clipboard_migration')
@@ -54,24 +67,62 @@ class ${table} extends Model{
     protected $fillable = [${kolom}];
 
     // public $timestamps = false;
+    // protected $hashable = ['password'];
+
+    protected $filterable = [${kolom}];
 
     /**
      * Create by LeeNuksID :D
-     *
      * Thanks For Using Laragen
      */
 }`)
-        res_crud.text(`<?php
+
+    res_transform.text(`<?php
+
+namespace App\\Transformers;
+
+use App\\Models\\${table};
+use League\\Fractal\\TransformerAbstract;
+
+class UserTransformer extends TransformerAbstract{
+    /**
+     * A Fractal transformer.
+     *
+     * @param  \\App\\Models\\${table}  $${table}
+     * @return array
+     */
+    public function transform(${table} $${table}): array
+    {
+        return [
+            'id'        => (int) $user->id,
+            'name'      => (string) $user->name,
+            'email'     => (string) $user->email,
+            'no_hp'     => (string) $user->no_hp,
+            'provinsi'  => (string) $user->provinsi,
+            'kota'      => (string) $user->kota,
+            'kecamatan' => (string) $user->kecamatan,
+        ];
+    }
+}`)
+
+    res_crud.text(`<?php
     
 namespace App\\Http\\Controllers;
 
 use Illuminate\\Http\\Request;
 use App\\${table};
+use Illuminate\\Validation\\ValidationException;
+use Illuminate\\Http\\Response;
+use App\\Transformers\\${table}Transformer;
+
 
 class ${table}Controller extends Controller{
 
     public function index(){
-        $data = ${table}::get();
+        $data = ${table}::filter($request)->paginate($request->get('per_page', 20);
+        $response = fractal($data, new ${table}Transformer())->toArray();
+        return response()->json($users, Response::HTTP_OK);
+
         if(count($data) > 0){
             return response()->json([
                 'status'    => 'success',
@@ -84,6 +135,7 @@ class ${table}Controller extends Controller{
             ]);
         }
     }
+
     public function store(Request $request){
         $this->validate($request, [
             ${validasi}
@@ -185,9 +237,11 @@ $router->group(['prefix'=>'api/v1'], function() use($router){
 
 });`)
     
+    cp_transform.text('')
     cp_model.text('')
     cp_crud.text('')
     cp_migration.text('')
+    cp_transform.text(res_transform.text())
     cp_model.text(res_model.text())
     cp_crud.text(res_crud.text())
     cp_migration.text(res_migration.text())
@@ -199,10 +253,12 @@ function generate(){
     var table           = $('#table_name')
     var list_column_val = $('#list_column').val()
     var list_column     = list_column_val.split(',')
+    var res_transform   = $('#result_transform')
     var res_model       = $('#result_models')
     var res_crud        = $('#result_crud')
     var res_migration   = $('#result_migration')
     var res_routes      = $('#result_routes')
+    var cp_transform    = $('#clipboard_transform')
     var cp_model        = $('#clipboard_models')
     var cp_crud         = $('#clipboard_crud')
     var cp_migration    = $('#clipboard_migration')
@@ -254,6 +310,14 @@ function generate(){
                 migrations += `$table->string('${list_column[i]}');\n            `
             }
         }
+        let transform             = ""
+        for (let i = 0; i < list_column.length; i++) {
+            if (i === list_column.length-1) {
+                transform += `'${list_column[i]}'        => (string) $${table.val()}->${list_column[i]},`
+            }else{
+                transform += `'${list_column[i]}'        => (string) $${table.val()}->${list_column[i]},\n            `
+            }
+        }
         res_model.text(`<?php
 
 namespace App\\Models;
@@ -266,94 +330,113 @@ class ${table.val().charAt(0).toUpperCase() + table.val().substr(1)} extends Mod
     protected $fillable = [${kolom}];
 
     // public $timestamps = false;
+    // protected $hashable = ['password'];
+
+    protected $filterable = [${kolom}];
 
     /**
      * Create by LeeNuksID :D
-     *
      * Thanks For Using Laragen
      */
 }`)
+
+    res_transform.text(`<?php
+
+namespace App\\Transformers;
+
+use App\\Models\\${table.val().charAt(0).toUpperCase() + table.val().substr(1)};
+use League\\Fractal\\TransformerAbstract;
+
+class ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Transformer extends TransformerAbstract{
+    /**
+     * A Fractal transformer.
+     *
+     * @param  \\App\\Models\\${table.val().charAt(0).toUpperCase() + table.val().substr(1)}  $${table}
+     * @return array
+     */
+    public function transform(${table.val().charAt(0).toUpperCase() + table.val().substr(1)} $${table}): array{
+        return [
+            ${transform}
+        ];
+    }
+    
+    /**
+    * Create by LeeNuksID :D
+    * Thanks For Using Laragen
+    */
+}`)
+
         res_crud.text(`<?php
     
 namespace App\\Http\\Controllers;
 
 use Illuminate\\Http\\Request;
+use Illuminate\\Http\\JsonResponse;
+use Illuminate\\Validation\\ValidationException;
+use Illuminate\\Http\\Response;
 use App\\Models\\${table.val().charAt(0).toUpperCase() + table.val().substr(1)};
+use App\\Transformers\\${table}Transformer;
 
 class ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller extends Controller{
 
     public function index(){
-        $data = ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}::get();
-        if(count($data) > 0){
-            return response()->json([
-                'status'    => 'success',
-                'pesan'     => 'berhasil',
-                'data'      => $data
-            ]);
-        }else{
-            return response()->json([
-                'status'    => 'success',
-                'pesan'     => 'Data Kosong',
-                'data'      => null
-            ]);
-        }
+        $${table.val()} = ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}::filter($request)->paginate($request->get('per_page', 20));
+
+        $fractal = fractal($${table.val()}, new UserTransformer())->toArray();
+
+        return response()->json($fractal, Response::HTTP_CREATED);
     }
-    public function store(Request $request){
-        $this->validate($request, [
-            ${validasi}
-        ]);
 
-        $send = ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}::create([
-            ${data}
-        ]);
-
-        // $send = ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}::insert([
-        ${data_comment}
-        // ]);
+    public function index_id($id){
+        $data = ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}::findOrFail($id);
         
-        // $send = ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}::create($request->all());
-
-
-        if ($send) {
-            return response()->json([
-                'status'    => 'success',
-                'pesan'     => 'Berhasil Menambah',
-            ]);
-        }
+        $fractal = fractal($${table.val()}, new ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Transformer())->toArray();
+    
+        return response()->json($fractak, Response::HTTP_OK);
     }
 
-    public function update(Request $request,$id){
-        $this->validate($request, [
-            ${validasi}
-        ]);
+    public function store(Request $request){
+        $attrs= $request->all();
+        $${table.val()} = new ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}($attrs);
 
-        $${table.val().toLowerCase()} = ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}::find($id);
-
-        $array = [
-            ${data}
-        ];
-
-        if ($${table.val().toLowerCase()}->update($array)) {
-            return response()->json([
-                'status'    => 'success',
-                'pesan'     => 'Berhasil Mengubah',
-            ]);
+        if (!$${table.val()}->isValidFor('CREATE')) {
+            throw new ValidationException($${table.val()}->validator());
         }
+
+        $user->save();
+
+        $fractal = fractal($${table.val()}, new ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Transformer())->toArray();
+   
+        return response()->json($fractal, Response::HTTP_OK);
+    }
+
+    public function update(Request $request, $id){
+        $attrs    = []
+        $${table.val()} = ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}::findOrFail($id);
+        $${table.val()}->fill($attrs);
+
+        if (!$${table.val()}->isValidFor('UPDATE')) {
+            throw new ValidationException($${table.val()}->validator());
+        }
+
+        $changes = ${table.val()}->getDirty();
+        ${table.val()}->save();
+
+        $fractal = fractal($${table.val()}, new ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Transformer())->toArray();
+    
+        return response()->json($fractal, Response::HTTP_OK);
     }
 
     public function destroy($id){
-        $${table.val().toLowerCase()} = ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}::find($id);
-        if ($${table.val().toLowerCase()}->delete()) {
-            return response()->json([
-                'status'    => 'success',
-                'pesan'     => 'Berhasil Menghapus',
-            ]);
-        }
+        $${table.val()} = ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}::findOrFail($id);
+
+        $fractal = (bool) $${table.val()}->delete();
+
+        return response()->json($fractal, Response::HTTP_OK);
     }
     
     /**
      * Create by LeeNuksID :D
-     *
      * Thanks For Using Laragen
      */
 }`)
@@ -379,7 +462,6 @@ class ${table.val().charAt(0).toUpperCase() + table.val().substr(1)} extends Mig
 
     /**
      * Create by LeeNuksID :D
-     *
      * Thanks For Using Laragen
      */
 }`)
@@ -392,15 +474,18 @@ $app->get('/', function() use ($app) {
 $router->group(['prefix'=>'api/v1'], function() use($router){
 
     $router->get('${table.val().toLowerCase().replace(" ", "_")}', '${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller@index');
+    $router->get('${table.val().toLowerCase().replace(" ", "_")}/{id}', '${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller@index_id');
     $router->post('${table.val().toLowerCase().replace(" ", "_")}', '${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller@store');
     $router->put('${table.val().toLowerCase().replace(" ", "_")}/{id}', '${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller@update');
     $router->delete('${table.val().toLowerCase().replace(" ", "_")}/{id}', '${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller@destroy');
 
 });`)
     
+        cp_transform.text('')
         cp_model.text('')
         cp_crud.text('')
         cp_migration.text('')
+        cp_transform.text(res_transform.text())        
         cp_model.text(res_model.text())
         cp_crud.text(res_crud.text())
         cp_migration.text(res_migration.text())

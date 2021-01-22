@@ -22,15 +22,14 @@
                 <div class="tab-pane fade show active" id="allone" role="tabpanel" aria-labelledby="allone-tab">
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <div class="card h-22">
+                            <div class="card h-10">
                                 <div class="card-body">
-                                    <input type="text" class="form-control mb-2" name="" id="table_name" aria-describedby="helpId" placeholder="Table Name" autofocus onkeypress="return goodchars(event,'abcdefghijklmnopqrstuvwxyz_',this)">
-                                    <textarea class="form-control" name="" id="list_column" rows="8" placeholder="column1,column2,column3,column4,column5" onkeypress="return goodchars(event,'abcdefghijklmnopqrstuvwxyz_,1234567890',this)" onkeyup="disableEnter()"></textarea>
-                                    <div class="row mt-3">
+                                    <input type="text" class="form-control" name="" id="table_name" aria-describedby="helpId" placeholder="Table Name" autofocus onkeypress="return goodchars(event,'abcdefghijklmnopqrstuvwxyz_',this)">
+                                    <textarea class="form-control mt-2" name="" id="list_column" rows="1" placeholder="column1,column2,column3,column4,column5" onkeypress="return goodchars(event,'abcdefghijklmnopqrstuvwxyz_,1234567890',this)"></textarea>
+                                    <div class="row mt-2">
                                         <div class="col-md-7">
                                             <ul>
                                                 <li><strong class="text-dark">ENTER</strong> in Textarea for Generate </li>
-                                                <li><strong class="text-primary">EXAMPLE</strong> for See Example Result </li>
                                             </ul>
                                         </div>
                                         <div class="col-md-5 text-right">
@@ -54,6 +53,22 @@
                                     </div>
                                     <pre><code id="result_models"></code></pre>
                                     <textarea id="clipboard_models" style="opacity: 0;"></textarea>
+                                </div>
+                            </div>
+                            <div class="card mt-3 dark h-10">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            <p class="font-weight-bold">
+                                                Result For Transform
+                                            </p>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <span onclick="copyClipboard('transform')" class="badge badge-danger">Copy Code</span>
+                                        </div>
+                                    </div>
+                                    <pre><code id="result_transform"></code></pre>
+                                    <textarea id="clipboard_transform" style="opacity: 0;"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -105,170 +120,6 @@
                                     </div>
                                     <pre><code id="result_routes"></code></pre>
                                     <textarea id="clipboard_routes" style="opacity: 0;"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Models -->
-                <div class="tab-pane fade" id="models" role="tabpanel" aria-labelledby="models-tab">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="card h-33">
-                                <div class="card-body">
-                                    <input type="text" class="form-control mb-2" name="" id="" aria-describedby="helpId" placeholder="Table Name" autofocus onkeypress="return goodchars(event,'abcdefghijklmnopqrstuvwxyz_',this)">
-                                    <textarea class="form-control" name="" id="" rows="15" placeholder="column1,column2,column3,column4,column5" onkeypress="return goodchars(event,'abcdefghijklmnopqrstuvwxyz_,1234567890',this)"></textarea>
-                                    <div class="row mt-3">
-                                        <div class="col-md-7">
-                                            
-                                        </div>
-                                        <div class="col-md-5 text-right">
-                                            <button class="btn btn-primary">Example</button>
-                                            <button type="button" onclick="generate()" class="btn btn-danger">Generate</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 pl-0">
-                            <div class="card h-33 dark">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-10">
-                                            <p class="font-weight-bold">
-                                                Result For Models
-                                            </p>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <span onclick="copyClipboard('models')" class="badge badge-danger">Copy Code</span>
-                                        </div>
-                                    </div>
-                                    <p>
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta quia eligendi id itaque. Neque illo sequi, eveniet, quasi delectus excepturi nulla at obcaecati itaque velit corrupti dolores deserunt? Molestiae, totam.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- CRUD -->
-                <div class="tab-pane fade" id="crud" role="tabpanel" aria-labelledby="crud-tab">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="card h-33">
-                                <div class="card-body">
-                                    <input type="text" class="form-control mb-2" name="" id="" aria-describedby="helpId" placeholder="Table Name" autofocus onkeypress="return goodchars(event,'abcdefghijklmnopqrstuvwxyz_',this)">
-                                    <textarea class="form-control" name="" id="" rows="15" placeholder="column1,column2,column3,column4,column5" onkeypress="return goodchars(event,'abcdefghijklmnopqrstuvwxyz_,1234567890',this)"></textarea>
-                                    <div class="row mt-3">
-                                        <div class="col-md-7">
-                                            
-                                        </div>
-                                        <div class="col-md-5 text-right">
-                                            <button class="btn btn-primary">Example</button>
-                                            <button type="button" onclick="generate()" class="btn btn-danger">Generate</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 pl-0">
-                            <div class="card h-33 dark">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-10">
-                                            <p class="font-weight-bold">
-                                                Result For CRUD Functions
-                                            </p>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <span onclick="copyClipboard('crud')" class="badge badge-danger">Copy Code</span>
-                                        </div>
-                                    </div>
-                                    <p>
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta quia eligendi id itaque. Neque illo sequi, eveniet, quasi delectus excepturi nulla at obcaecati itaque velit corrupti dolores deserunt? Molestiae, totam.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Migration -->
-                <div class="tab-pane fade" id="migration" role="tabpanel" aria-labelledby="migration-tab">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="card h-33">
-                                <div class="card-body">
-                                    <input type="text" class="form-control mb-2" name="" id="" aria-describedby="helpId" placeholder="Table Name" autofocus onkeypress="return goodchars(event,'abcdefghijklmnopqrstuvwxyz_',this)">
-                                    <textarea class="form-control" name="" id="" rows="15" placeholder="column1,column2,column3,column4,column5" onkeypress="return goodchars(event,'abcdefghijklmnopqrstuvwxyz_,1234567890',this)"></textarea>
-                                    <div class="row mt-3">
-                                        <div class="col-md-7">
-                                            
-                                        </div>
-                                        <div class="col-md-5 text-right">
-                                            <button class="btn btn-primary">Example</button>
-                                            <button type="button" onclick="generate()" class="btn btn-danger">Generate</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 pl-0">
-                            <div class="card h-33 dark">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-10">
-                                            <p class="font-weight-bold">
-                                                Result For Migrations
-                                            </p>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <span onclick="copyClipboard('migration')" class="badge badge-danger">Copy Code</span>
-                                        </div>
-                                    </div>
-                                    <p>
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta quia eligendi id itaque. Neque illo sequi, eveniet, quasi delectus excepturi nulla at obcaecati itaque velit corrupti dolores deserunt? Molestiae, totam.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Routes -->
-                <div class="tab-pane fade" id="route" role="tabpanel" aria-labelledby="route-tab">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="card h-33">
-                                <div class="card-body">
-                                    <input type="text" class="form-control mb-2" name="" id="" aria-describedby="helpId" placeholder="Table Name" autofocus onkeypress="return goodchars(event,'abcdefghijklmnopqrstuvwxyz_',this)">
-                                    <textarea class="form-control" name="" id="" rows="15" placeholder="column1,column2,column3,column4,column5" onkeypress="return goodchars(event,'abcdefghijklmnopqrstuvwxyz_,1234567890',this)"></textarea>
-                                    <div class="row mt-3">
-                                        <div class="col-md-7">
-                                            
-                                        </div>
-                                        <div class="col-md-5 text-right">
-                                            <button class="btn btn-primary">Example</button>
-                                            <button type="button" onclick="generate()" class="btn btn-danger">Generate</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 pl-0">
-                            <div class="card h-33 dark">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-10">
-                                            <p class="font-weight-bold">
-                                                Result For Routes
-                                            </p>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <span onclick="copyClipboard('migration')" class="badge badge-danger">Copy Code</span>
-                                        </div>
-                                    </div>
-                                    <p>
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta quia eligendi id itaque. Neque illo sequi, eveniet, quasi delectus excepturi nulla at obcaecati itaque velit corrupti dolores deserunt? Molestiae, totam.
-                                    </p>
                                 </div>
                             </div>
                         </div>
