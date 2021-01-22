@@ -375,7 +375,7 @@ use Illuminate\\Http\\JsonResponse;
 use Illuminate\\Validation\\ValidationException;
 use Illuminate\\Http\\Response;
 use App\\Models\\${table.val().charAt(0).toUpperCase() + table.val().substr(1)};
-use App\\Transformers\\${table}Transformer;
+use App\\Transformers\\${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Transformer;
 
 class ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller extends Controller{
 
