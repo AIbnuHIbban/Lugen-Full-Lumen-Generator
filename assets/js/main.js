@@ -17,8 +17,17 @@ $('textarea').keypress(function(event) {
     if (event.keyCode == 13) {
         event.preventDefault();
         generate()
+    }else if(event.keyCode === 71){
+        formatter()
+        return false
     }
 });
+
+function formatter() {
+    let value   = $('#list_column').val()
+    $('#list_column').val('')
+    $('#list_column').val(value.replace(/\n/g,","))
+}
 
 function copyClipboard(jenis) {
     var clipboard = $(`#clipboard_${jenis}`);
