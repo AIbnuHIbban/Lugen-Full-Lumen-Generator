@@ -155,20 +155,6 @@ class ${table} extends Migration{
             $table->id();
             ${migrations}
             $table->timestamps();
-
-            // Options: See More at https://laravel.com/docs/8.x/migrations#creating-columns
-            // integer
-            // bigInteger
-            // binary
-            // boolean
-            // char
-            // date
-            // dateTime
-            // decimal
-            // double
-            // enum('level', ['easy', 'hard']);
-            // float
-            // longText
         });
     }
 
@@ -336,12 +322,12 @@ class ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller e
         }
     }
 
-    public function update(Request $request,$${table.val().toLowerCase()}){
+    public function update(Request $request,$id){
         $this->validate($request, [
             ${validasi}
         ]);
 
-        $${table.val().toLowerCase()} = ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}::find($${table.val().toLowerCase()});
+        $${table.val().toLowerCase()} = ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}::find($id);
 
         $array = [
             ${data}
@@ -355,8 +341,8 @@ class ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller e
         }
     }
 
-    public function destroy($${table.val().toLowerCase()}){
-        $${table.val().toLowerCase()} = ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}::find($${table.val().toLowerCase()});
+    public function destroy($id){
+        $${table.val().toLowerCase()} = ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}::find($id);
         if ($${table.val().toLowerCase()}->delete()) {
             return response()->json([
                 'status'    => 'success',
@@ -384,20 +370,6 @@ class ${table.val().charAt(0).toUpperCase() + table.val().substr(1)} extends Mig
             $table->id();
             ${migrations}
             $table->timestamps();
-
-            // Options: See More at https://laravel.com/docs/8.x/migrations#creating-columns
-            // integer
-            // bigInteger
-            // binary
-            // boolean
-            // char
-            // date
-            // dateTime
-            // decimal
-            // double
-            // enum('level', ['easy', 'hard']);
-            // float
-            // longText
         });
     }
 
