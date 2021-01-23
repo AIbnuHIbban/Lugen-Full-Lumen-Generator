@@ -501,7 +501,9 @@ $router->group(['prefix'=>'api/v1'], function() use($router){
 
 
         res_artisan.text(`php artisan make:model ${table.val().charAt(0).toUpperCase() + table.val().substr(1)} -mrc
-php artisan make:transformer ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}`)
+php artisan make:transformer ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}
+
+`)
 
     
         cp_transform.text('')
