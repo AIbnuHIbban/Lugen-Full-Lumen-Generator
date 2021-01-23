@@ -429,7 +429,7 @@ class ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller e
     }
 
     public function update(Request $request, $id){
-        $attrs    = []
+        $attrs    = [];
         $${table.val()} = ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}::findOrFail($id);
         $${table.val()}->fill($attrs);
 
