@@ -455,7 +455,7 @@ use Illuminate\\Database\\Migrations\\Migration;
 use Illuminate\\Database\\Schema\\Blueprint;
 use Illuminate\\Support\\Facades\\Schema;
 
-class ${table.val().charAt(0).toUpperCase() + table.val().substr(1)} extends Migration{
+class Create${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Table extends Migration{
     
     public function up(){
         Schema::create('${table.val().toLowerCase().replace(" ", "_")}', function (Blueprint $table) {
