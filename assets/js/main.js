@@ -402,7 +402,7 @@ use App\\Transformers\\${table.val().charAt(0).toUpperCase() + table.val().subst
 
 class ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller extends Controller{
 
-    public function index(){
+    public function index(Request $request){
         $${table.val()} = ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}::filter($request)->paginate($request->get('per_page', 20));
 
         $fractal = fractal($${table.val()}, new ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Transformer())->toArray();
