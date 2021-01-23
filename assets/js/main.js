@@ -301,7 +301,7 @@ function generate(){
             if (i === list_column.length-1) {
                 validasi += '"'+list_column[i]+'"         => "required"'
             }else{
-                validasi += '"'+list_column[i]+'"         => "required",\n            '
+                validasi += '"'+list_column[i]+'"         => "required",\n                '
             }
         }
         let data           = ""
@@ -341,8 +341,14 @@ function generate(){
 namespace App\\Models;
     
 use Illuminate\\Database\\Eloquent\\Model;
+// use App\\Traits\\AttributeHashable;
+// use App\\Traits\\ModelValidatable;
+// use App\\Traits\\QueryFilterable;
     
 class ${table.val().charAt(0).toUpperCase() + table.val().substr(1)} extends Model{
+
+    // use QueryFilterable, ModelValidatable, AttributeHashable, HasFactory;
+    
     protected $table = "${table.val().toLowerCase().replace(" ", "_")}";
 
     protected $fillable = [${kolom}];
@@ -351,6 +357,19 @@ class ${table.val().charAt(0).toUpperCase() + table.val().substr(1)} extends Mod
     // protected $hashable = ['password'];
 
     protected $filterable = [${kolom}];
+
+    /**
+     * Validation rules for the model.
+     *
+     * @return array
+     */
+    public function rules(): array{
+        return [
+            '*' => [
+                ${validasi}
+            ]
+        ];
+    }
 
     /**
      * Create by LeeNuksID :D
@@ -369,10 +388,10 @@ class ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Transformer 
     /**
      * A Fractal transformer.
      *
-     * @param  \\App\\Models\\${table.val().charAt(0).toUpperCase() + table.val().substr(1)}  $${table}
+     * @param  \\App\\Models\\${table.val().charAt(0).toUpperCase() + table.val().substr(1)}  $${table.val()}
      * @return array
      */
-    public function transform(${table.val().charAt(0).toUpperCase() + table.val().substr(1)} $${table}): array{
+    public function transform(${table.val().charAt(0).toUpperCase() + table.val().substr(1)} $${table.val()}): array{
         return [
             ${transform}
         ];
@@ -400,7 +419,7 @@ class ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller e
     public function index(){
         $${table.val()} = ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}::filter($request)->paginate($request->get('per_page', 20));
 
-        $fractal = fractal($${table.val()}, new UserTransformer())->toArray();
+        $fractal = fractal($${table.val()}, new ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Transformer())->toArray();
 
         return response()->json($fractal, Response::HTTP_CREATED);
     }
@@ -501,7 +520,7 @@ $router->group(['prefix'=>'api/v1'], function() use($router){
 
 
         res_artisan.text(`php artisan make:model ${table.val().charAt(0).toUpperCase() + table.val().substr(1)} -mrc
-php artisan make:transformer ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}
+php artisan make:transformer ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Transformer
 
 `)
 
