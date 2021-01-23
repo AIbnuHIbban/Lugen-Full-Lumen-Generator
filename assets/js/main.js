@@ -379,6 +379,7 @@ class ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Transformer 
      */
     public function transform(${table.val().charAt(0).toUpperCase() + table.val().substr(1)} $${table.val()}): array{
         return [
+            'id' => (int) $${table.val()}->id,
             ${transform}
         ];
     }
