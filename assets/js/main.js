@@ -55,11 +55,13 @@ function example(){
     var res_crud        = $('#result_crud')
     var res_migration   = $('#result_migration')
     var res_routes      = $('#result_routes')
+    var res_artisan     = $('#result_artisan')
     var cp_transform    = $('#clipboard_transform')
     var cp_model        = $('#clipboard_models')
     var cp_crud         = $('#clipboard_crud')
     var cp_migration    = $('#clipboard_migration')
     var cp_routes       = $('#clipboard_routes')
+    var cp_artisan      = $('#clipboard_artisan')
     let kolom           = "'column1','column2','column3','column4','column5','column6','column7'"
     let validasi        = "'column1'        => 'required'"
     let data            = "'column1'        => $request->column1"
@@ -245,16 +247,21 @@ $router->group(['prefix'=>'api/v1'], function() use($router){
     $router->delete('${table.toLowerCase().replace(" ", "_")}/{id}', '${table}Controller@destroy');
 
 });`)
+
+        res_artisan.text(`php artisan make:model ${table} -mrc
+php artisan make:transformer ${table}`)
     
     cp_transform.text('')
     cp_model.text('')
     cp_crud.text('')
     cp_migration.text('')
+    cp_artisan.text('')
     cp_transform.text(res_transform.text())
     cp_model.text(res_model.text())
     cp_crud.text(res_crud.text())
     cp_migration.text(res_migration.text())
     cp_routes.text(res_routes.text())
+    cp_artisan.text(res_artisan.text())
     list_column_val = "";
 }
 
@@ -267,11 +274,13 @@ function generate(){
     var res_crud        = $('#result_crud')
     var res_migration   = $('#result_migration')
     var res_routes      = $('#result_routes')
+    var res_artisan     = $('#result_artisan')    
     var cp_transform    = $('#clipboard_transform')
     var cp_model        = $('#clipboard_models')
     var cp_crud         = $('#clipboard_crud')
     var cp_migration    = $('#clipboard_migration')
     var cp_routes       = $('#clipboard_routes')
+    var cp_artisan      = $('#clipboard_artisan')
     let kolom           = ""
     if (table.val() === "" || list_column_val === "") {
         Swal.fire(
@@ -489,16 +498,23 @@ $router->group(['prefix'=>'api/v1'], function() use($router){
     $router->delete('${table.val().toLowerCase().replace(" ", "_")}/{id}', '${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller@destroy');
 
 });`)
+
+
+        res_artisan.text(`php artisan make:model ${table.val().charAt(0).toUpperCase() + table.val().substr(1)} -mrc
+php artisan make:transformer ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}`)
+
     
         cp_transform.text('')
         cp_model.text('')
         cp_crud.text('')
         cp_migration.text('')
+        cp_artisan.text('')
         cp_transform.text(res_transform.text())        
         cp_model.text(res_model.text())
         cp_crud.text(res_crud.text())
         cp_migration.text(res_migration.text())
         cp_routes.text(res_routes.text())
+        cp_artisan.text(res_artisan.text())
         list_column_val = "";
     }
 }
