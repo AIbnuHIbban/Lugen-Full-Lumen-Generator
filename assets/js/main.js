@@ -342,12 +342,11 @@ namespace App\\Models;
     
 use Illuminate\\Database\\Eloquent\\Model;
 // use App\\Traits\\AttributeHashable;
-// use App\\Traits\\ModelValidatable;
 // use App\\Traits\\QueryFilterable;
     
 class ${table.val().charAt(0).toUpperCase() + table.val().substr(1)} extends Model{
 
-    // use QueryFilterable, ModelValidatable, AttributeHashable, HasFactory;
+    // use QueryFilterable, AttributeHashable, HasFactory;
     
     protected $table = "${table.val().toLowerCase().replace(" ", "_")}";
 
@@ -357,19 +356,6 @@ class ${table.val().charAt(0).toUpperCase() + table.val().substr(1)} extends Mod
     // protected $hashable = ['password'];
 
     protected $filterable = [${kolom}];
-
-    /**
-     * Validation rules for the model.
-     *
-     * @return array
-     */
-    public function rules(): array{
-        return [
-            '*' => [
-                ${validasi}
-            ]
-        ];
-    }
 
     /**
      * Create by LeeNuksID :D
@@ -429,18 +415,18 @@ class ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller e
         
         $fractal = fractal($${table.val()}, new ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Transformer())->toArray();
     
-        return response()->json($fractak, Response::HTTP_OK);
+        return response()->json($fractal, Response::HTTP_OK);
     }
 
     public function store(Request $request){
+        $this->validate($request, [
+            ${validasi}
+        ]);
+
         $attrs= $request->all();
         $${table.val()} = new ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}($attrs);
 
-        if (!$${table.val()}->isValidFor('CREATE')) {
-            throw new ValidationException($${table.val()}->validator());
-        }
-
-        $user->save();
+        $${table.val()}->save();
 
         $fractal = fractal($${table.val()}, new ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Transformer())->toArray();
    
@@ -448,13 +434,13 @@ class ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller e
     }
 
     public function update(Request $request, $id){
+        $this->validate($request, [
+            ${validasi}
+        ]);
+
         $attrs    = [];
         $${table.val()} = ${table.val().charAt(0).toUpperCase() + table.val().substr(1)}::findOrFail($id);
         $${table.val()}->fill($attrs);
-
-        if (!$${table.val()}->isValidFor('UPDATE')) {
-            throw new ValidationException($${table.val()}->validator());
-        }
 
         $changes = ${table.val()}->getDirty();
         ${table.val()}->save();
