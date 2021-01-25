@@ -342,11 +342,11 @@ namespace App\\Models;
     
 use Illuminate\\Database\\Eloquent\\Model;
 // use App\\Traits\\AttributeHashable;
-// use App\\Traits\\QueryFilterable;
+use App\\Traits\\QueryFilterable;
     
 class ${table.val().charAt(0).toUpperCase() + table.val().substr(1)} extends Model{
-
-    // use QueryFilterable, AttributeHashable, HasFactory;
+    use QueryFilterable;
+    //  AttributeHashable, HasFactory;
     
     protected $table = "${table.val().toLowerCase().replace(" ", "_")}";
 
