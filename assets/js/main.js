@@ -259,12 +259,14 @@ php artisan make:test ${table}
     cp_crud.text('')
     cp_migration.text('')
     cp_artisan.text('')
+    cp_testing.text('')
     cp_transform.text(res_transform.text())
     cp_model.text(res_model.text())
     cp_crud.text(res_crud.text())
     cp_migration.text(res_migration.text())
     cp_routes.text(res_routes.text())
     cp_artisan.text(res_artisan.text())
+    cp_testingartisan.text(res_testing.text())
     list_column_val = "";
 }
 
@@ -614,12 +616,14 @@ php artisan make:test ${table.val().charAt(0).toUpperCase() + table.val().substr
         cp_crud.text('')
         cp_migration.text('')
         cp_artisan.text('')
+        cp_testing.text('')
         cp_transform.text(res_transform.text())        
         cp_model.text(res_model.text())
         cp_crud.text(res_crud.text())
         cp_migration.text(res_migration.text())
         cp_routes.text(res_routes.text())
         cp_artisan.text(res_artisan.text())
+        cp_testing.text(res_testing.text())
         list_column_val = "";
     }
 }
