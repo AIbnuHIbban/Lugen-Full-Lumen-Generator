@@ -233,22 +233,10 @@ class ${table} extends Migration{
      * Thanks For Using Laragen
      */
 }`)
-        res_routes.text(`<?php
-    
-use App\\Http\\Controllers\\${table}Controller;
-
-$app->get('/', function() use ($app) {
-    return $app->app->version();
-});
-
-$router->group(['prefix'=>'api/v1'], function() use($router){
-
-    $router->get('${table.toLowerCase().replace(" ", "_")}', '${table}Controller@index');
-    $router->post('${table.toLowerCase().replace(" ", "_")}', '${table}Controller@store');
-    $router->put('${table.toLowerCase().replace(" ", "_")}/{id}', '${table}Controller@update');
-    $router->delete('${table.toLowerCase().replace(" ", "_")}/{id}', '${table}Controller@destroy');
-
-});`)
+        res_routes.text(`$router->get('${table.toLowerCase().replace(" ", "_")}', '${table}Controller@index');
+$router->post('${table.toLowerCase().replace(" ", "_")}', '${table}Controller@store');
+$router->put('${table.toLowerCase().replace(" ", "_")}/{id}', '${table}Controller@update');
+$router->delete('${table.toLowerCase().replace(" ", "_")}/{id}', '${table}Controller@destroy');`)
 
         res_artisan.text(`php artisan make:model ${table} -mrc
 php artisan make:transformer ${table}
@@ -588,21 +576,11 @@ class Create${table.val().charAt(0).toUpperCase() + table.val().substr(1)}sTable
      * Thanks For Using Laragen
      */
 }`)
-        res_routes.text(`<?php
-    
-$app->get('/', function() use ($app) {
-    return $app->app->version();
-});
-
-$router->group(['prefix'=>'api/v1'], function() use($router){
-
-    $router->get('${table.val().toLowerCase().replace(" ", "_")}', '${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller@index');
-    $router->get('${table.val().toLowerCase().replace(" ", "_")}/{id}', '${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller@index_id');
-    $router->post('${table.val().toLowerCase().replace(" ", "_")}', '${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller@store');
-    $router->put('${table.val().toLowerCase().replace(" ", "_")}/{id}', '${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller@update');
-    $router->delete('${table.val().toLowerCase().replace(" ", "_")}/{id}', '${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller@destroy');
-
-});`)
+        res_routes.text(`$router->get('${table.val().toLowerCase().replace(" ", "_")}', '${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller@index');
+$router->get('${table.val().toLowerCase().replace(" ", "_")}/{id}', '${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller@index_id');
+$router->post('${table.val().toLowerCase().replace(" ", "_")}', '${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller@store');
+$router->put('${table.val().toLowerCase().replace(" ", "_")}/{id}', '${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller@update');
+$router->delete('${table.val().toLowerCase().replace(" ", "_")}/{id}', '${table.val().charAt(0).toUpperCase() + table.val().substr(1)}Controller@destroy');`)
 
 
         res_artisan.text(`php artisan make:model ${table.val().charAt(0).toUpperCase() + table.val().substr(1)} -mrc
