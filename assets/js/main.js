@@ -28,6 +28,7 @@ function formatter() {
     $('#list_column').val('')
     $('#list_column').val(value.replace(/\n/g,","))
     $('#list_column').val(value.replaceAll("'",""))
+    $('#list_column').val(value.replaceAll('"',''))
 }
 
 function copyClipboard(jenis) {
